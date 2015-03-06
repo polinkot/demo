@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,7 +50,10 @@ public class OrderControllerTest {
         Arrays.fill(chars, c);
         String s3 = new String(chars);
 
-        long sortTypeId = new Random().nextInt(3) + 1;
+        String[] methods = {"BUBBLE_SORT", "MERRGE_SORT", "LSDRADIX_SORT"};
+        int sortMethodId = new Random().nextInt(3);
+
+        int sortTypeId = new Random().nextInt(3) + 1;
 
 
         HttpHeaders headers = new HttpHeaders();
@@ -57,8 +61,13 @@ public class OrderControllerTest {
 
 //        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"sortType\":\"BUBBLE_SORT_TEST\",\"list\":[\"" + s1 + "\",\"" + s2 + "\",\"" + s3 + "\"]}", headers);
 //        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"sortType\":{\"sortTypeId\":2},\"list\":[\"" + s1 + "\",\"" + s2 + "\",\"" + s3 + "\"]}", headers);
+//        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"orderId\":38,\"sortType\":{\"sortTypeId\":2,\"name\":\"Merge sort\",\"cost\":0.5159491546571577},\"list\":[\"ffffff\",\"nnnnnn\",\"qqqqqq\"]}", headers);
+//        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"list\":[\"" + s1 + "\",\"" + s2 + "\",\"" + s3 + "\"]}", headers);
+//        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"list\":[\"" + s1 + "\",\"" + s2 + "\",\"" + s3 + "\"],\"sortMethod\":\"" + methods[sortMethodId] + "\"}", headers);
         HttpEntity<String> entityJSON = new HttpEntity<String>("{\"list\":[\"" + s1 + "\",\"" + s2 + "\",\"" + s3 + "\"]}", headers);
+//        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"list\":[\"" + s1 + "\",\"" + s2 + "\",\"" + s3 + "\"]}", headers);
 //        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"list\":[\"bbbbbb\",\"pppppp\",\"hhhhhh\"]}}", headers);
+//        ResponseEntity<ArrayList> response = restTemplate.postForEntity("http://localhost:8080/processOrder/" + sortTypeId, entityJSON, ArrayList.class);
         ResponseEntity<ArrayList> response = restTemplate.postForEntity("http://localhost:8080/processOrder/" + sortTypeId, entityJSON, ArrayList.class);
         ArrayList e = response.getBody();
 
@@ -68,7 +77,7 @@ public class OrderControllerTest {
 
 //creation
 //curl -i -X POST -H "Content-Type:application/json" -d "{\"sortType\" : \"TEST_LSDRADIX_SORT\"}" http://localhost:8080/orders
-//curl -i -X POST -H "Content-Type:application/json" -d "{\"list\" : [\"bbbbbb\",\"pppppp\",\"hhhhhh\"]}}" http://localhost:8080/addOrder/2
+//curl -i -X POST -H "Content-Type:application/json" -d "{\"list\" : [\"bbbbbb\",\"ccccccc\",\"aaaaaaaaaaaaaaa\"]}}" http://localhost:8080/processOrder/2
 
     }
 }

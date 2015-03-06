@@ -2,6 +2,7 @@ package demo.web;
 
 import demo.domain.Order;
 import demo.domain.SortType;
+import demo.domain.SortTypeRepository;
 import demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -69,5 +70,5 @@ public class OrderController {
         SortType saved = sortTypeRepository.save(sortType);
         return saved;
     }
-    */
+*/
 }

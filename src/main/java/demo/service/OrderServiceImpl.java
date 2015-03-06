@@ -6,10 +6,7 @@ import demo.domain.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -17,7 +14,6 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Override
-    @Transactional
     public List<String> processOrder(Order order, SortType sortType) {
         if (order == null || sortType == null) {
             throw new IllegalArgumentException("Argument is null: order = " + order + " sortType = " + sortType);
@@ -26,15 +22,93 @@ public class OrderServiceImpl implements OrderService {
         order.setSortType(sortType);
         Order saved = orderRepository.save(order);
 
-        //extract to class sorter
-        ArrayList<String> sortable = new ArrayList<String>(saved.getList());
-        Collections.sort(sortable);
+        ArraySorter arraySorter = ArraySorterRegistry.get(saved.getSortType().getKey());
+        List<String> result = arraySorter.sort(saved.getList());
 
-        return sortable;
+        return result;
     }
 
     @Override
     public Iterable<Order> findAll() {
         return orderRepository.findAll();
+    }
+}
+
+interface ArraySorter {
+    enum Key {BUBBLE_SORT, MERRGE_SORT, LSDRADIX_SORT}
+
+    List<String> sort(List<String> original);
+
+    Key getKey();
+}
+
+class BubbleSorter implements ArraySorter {
+
+    @Override
+    public List<String> sort(List<String> original) {
+        List<String> result = new ArrayList<String>(original);
+        Collections.sort(result);
+
+        return result;
+    }
+
+    @Override
+    public Key getKey() {
+        return Key.BUBBLE_SORT;
+    }
+}
+
+class MergeSorter implements ArraySorter {
+
+    @Override
+    public List<String> sort(List<String> original) {
+        List<String> result = new ArrayList<String>(original);
+        Collections.sort(result);
+
+        return result;
+    }
+
+    @Override
+    public Key getKey() {
+        return Key.MERRGE_SORT;
+    }
+}
+
+class LsdRadixSorter implements ArraySorter {
+
+    @Override
+    public List<String> sort(List<String> original) {
+        List<String> result = new ArrayList<String>(original);
+        Collections.sort(result);
+
+        return result;
+    }
+
+    @Override
+    public Key getKey() {
+        return Key.LSDRADIX_SORT;
+    }
+}
+
+class ArraySorterRegistry {
+    static Map<ArraySorter.Key, ArraySorter> registry = new HashMap<ArraySorter.Key, ArraySorter>();
+
+    static ArraySorter get(String key) {
+        ArraySorter.Key arraySorterKey = ArraySorter.Key.valueOf(key);
+        if (!registry.containsKey(arraySorterKey)) {
+            switch (arraySorterKey) {
+                case BUBBLE_SORT:
+                    registry.put(arraySorterKey, new BubbleSorter());
+                    break;
+                case MERRGE_SORT:
+                    registry.put(arraySorterKey, new MergeSorter());
+                    break;
+                case LSDRADIX_SORT:
+                    registry.put(arraySorterKey, new LsdRadixSorter());
+                    break;
+            }
+        }
+
+        return registry.get(arraySorterKey);
     }
 }

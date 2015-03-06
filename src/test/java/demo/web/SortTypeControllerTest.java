@@ -25,14 +25,14 @@ public class SortTypeControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"name\":\"Bubble sort\"}", headers);
+        HttpEntity<String> entityJSON = new HttpEntity<String>("{\"key\":\"BUBBLE_SORT\", \"name\":\"Bubble sort\"}", headers);
         ResponseEntity<SortType> response = restTemplate.postForEntity("http://localhost:8080/addSortType", entityJSON, SortType.class);
         SortType e = response.getBody();
 
-        entityJSON = new HttpEntity<String>("{\"name\":\"Merge sort\"}", headers);
+        entityJSON = new HttpEntity<String>("{\"key\":\"MERRGE_SORT\", \"name\":\"Merge sort\"}", headers);
         response = restTemplate.postForEntity("http://localhost:8080/addSortType", entityJSON, SortType.class);
 
-        entityJSON = new HttpEntity<String>("{\"name\":\"LSDRadixSort\"}", headers);
+        entityJSON = new HttpEntity<String>("{\"key\":\"LSDRADIX_SORT\", \"name\":\"LSDRadixSort\"}", headers);
         response = restTemplate.postForEntity("http://localhost:8080/addSortType", entityJSON, SortType.class);
     }
 }

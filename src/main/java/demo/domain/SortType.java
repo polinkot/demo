@@ -1,14 +1,19 @@
 package demo.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class SortType implements Serializable {
     @Id
     @GeneratedValue
     private Long sortTypeId;
+
+    @Column
+    private String key;
 
     @Column
     private String name;
@@ -22,6 +27,10 @@ public class SortType implements Serializable {
     public SortType() {
     }
 
+    public Long getSortTypeId() {
+        return sortTypeId;
+    }
+
     public double getCost() {
         return cost;
     }
@@ -30,8 +39,12 @@ public class SortType implements Serializable {
         this.cost = cost;
     }
 
-    public Long getSortTypeId() {
-        return sortTypeId;
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getName() {
@@ -41,14 +54,4 @@ public class SortType implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public List<Order> getOrders() {
-//        //TODO:!!!
-//        return orders;
-//    }
-//
-//    public void setOrders(List<Order> orders) {
-//        //TODO:!!!
-//        this.orders = orders;
-//    }
 }
