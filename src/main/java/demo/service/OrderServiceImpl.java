@@ -37,9 +37,8 @@ public class OrderServiceImpl implements OrderService {
 interface ArraySorter {
     enum Key {BUBBLE_SORT, MERRGE_SORT, LSDRADIX_SORT}
 
+    //supposed to be diiferent in different implementations
     List<String> sort(List<String> original);
-
-    Key getKey();
 }
 
 class BubbleSorter implements ArraySorter {
@@ -50,11 +49,6 @@ class BubbleSorter implements ArraySorter {
         Collections.sort(result);
 
         return result;
-    }
-
-    @Override
-    public Key getKey() {
-        return Key.BUBBLE_SORT;
     }
 }
 
@@ -67,11 +61,6 @@ class MergeSorter implements ArraySorter {
 
         return result;
     }
-
-    @Override
-    public Key getKey() {
-        return Key.MERRGE_SORT;
-    }
 }
 
 class LsdRadixSorter implements ArraySorter {
@@ -82,11 +71,6 @@ class LsdRadixSorter implements ArraySorter {
         Collections.sort(result);
 
         return result;
-    }
-
-    @Override
-    public Key getKey() {
-        return Key.LSDRADIX_SORT;
     }
 }
 

@@ -2,7 +2,6 @@ package demo.web;
 
 import demo.domain.Order;
 import demo.domain.SortType;
-import demo.domain.SortTypeRepository;
 import demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -51,24 +50,4 @@ public class OrderController {
     public Order viewOrder(@PathVariable("id") Order order) {
         return order;
     }
-
-//    @RequestMapping(value = "/viewOrder")
-//    public Order viewOrder() {
-//        Order order = orderRepository.findOne(1L);
-//        return order;
-//    }
-
-    //extract to separate
-/*
-    @Autowired
-    private SortTypeRepository sortTypeRepository;
-
-    @RequestMapping(value = "/addSortType", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    SortType addSortType(@RequestBody SortType sortType) {
-        SortType saved = sortTypeRepository.save(sortType);
-        return saved;
-    }
-*/
 }
