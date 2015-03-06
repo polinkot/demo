@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 interface ArraySorter {
     enum Key {BUBBLE_SORT, MERRGE_SORT, LSDRADIX_SORT}
 
-    //supposed to be diiferent in different implementations
+    //supposed to be different in different implementations
     List<String> sort(List<String> original);
 }
 
