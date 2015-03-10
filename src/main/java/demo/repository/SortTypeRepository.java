@@ -1,8 +1,8 @@
 package demo.repository;
 
 import demo.domain.SortType;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SortTypeRepository extends CrudRepository<SortType, Long> {
+public interface SortTypeRepository extends JpaRepository<SortType, Long> {
 }
 
