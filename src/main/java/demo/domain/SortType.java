@@ -1,9 +1,6 @@
 package demo.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -12,14 +9,15 @@ public class SortType implements Serializable {
     @GeneratedValue
     private Long sortTypeId;
 
-    @Column
-    private String key;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SortTypeKey key;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
-    private double cost = Math.random();
+    @Column(nullable = false)
+    private double cost;
 
 //    @OneToMany(mappedBy = "sortType")
 //    private List<Order> orders;
@@ -39,11 +37,11 @@ public class SortType implements Serializable {
         this.cost = cost;
     }
 
-    public String getKey() {
+    public SortTypeKey getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(SortTypeKey key) {
         this.key = key;
     }
 
@@ -53,5 +51,15 @@ public class SortType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "SortType{" +
+                "sortTypeId=" + sortTypeId +
+                ", key=" + key +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }

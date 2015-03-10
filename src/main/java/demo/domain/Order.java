@@ -19,7 +19,10 @@ public class Order implements Serializable {
     private SortType sortType;
 
     @Column
-    private ArrayList<String> list = new ArrayList<String>();
+    private String list = "";
+
+    @Column
+    private String result = "";
 
     public Order() {
     }
@@ -28,16 +31,20 @@ public class Order implements Serializable {
         return orderId;
     }
 
-    public List<String> getList() {
-        return Collections.unmodifiableList(list);
+    public String getList() {
+        return list;
     }
 
-    public void setList(ArrayList<String> list) {
-        if (list == null) {
-            return;
-        }
+    public void setList(String list) {
+        this.list = list == null ? "" : list;
+    }
 
-        this.list = list;
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result == null ? "" : result;
     }
 
     public SortType getSortType() {
@@ -46,5 +53,15 @@ public class Order implements Serializable {
 
     public void setSortType(SortType sortType) {
         this.sortType = sortType;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", sortType=" + sortType +
+                ", list='" + list + '\'' +
+                ", result='" + result + '\'' +
+                '}';
     }
 }
