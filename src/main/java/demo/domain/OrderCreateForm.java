@@ -14,6 +14,9 @@ public class OrderCreateForm {
     @NotEmpty
     private int sortType = 1;
 
+    @NotEmpty
+    private long userId;
+
     private boolean saved;
 
     public String getList() {
@@ -40,6 +43,14 @@ public class OrderCreateForm {
         this.sortType = sortType;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public boolean isSaved() {
         return saved;
     }
@@ -54,6 +65,8 @@ public class OrderCreateForm {
                 "list='" + list + '\'' +
                 ", result='" + result + '\'' +
                 ", sortType=" + sortType +
+                ", userId=" + userId +
+                ", saved=" + saved +
                 '}';
     }
 }

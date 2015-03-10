@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
 <#-- @ftlvariable name="form" type="demo.domain.OrderCreateForm" -->
+<#-- @ftlvariable name="currentUser" type="demo.domain.CurrentUser" -->
 <#import "/spring.ftl" as spring>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,7 @@
         <label for="sortType">Sort Type</label>
         <input type="text" name="sortType" id="sortType" value="${form.sortType}" required/>
     </div>
+    <input type="hidden" name="userId" id="userId" value="${currentUser.id}" required/>
     <button type="submit">Save</button>
 </form>
 <#else>

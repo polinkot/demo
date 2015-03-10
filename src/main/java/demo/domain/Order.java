@@ -18,6 +18,10 @@ public class Order implements Serializable {
     @JoinColumn(name = "sortTypeId")
     private SortType sortType;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column
     private String list = "";
 
@@ -55,11 +59,20 @@ public class Order implements Serializable {
         this.sortType = sortType;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
                 ", sortType=" + sortType +
+                ", user=" + user +
                 ", list='" + list + '\'' +
                 ", result='" + result + '\'' +
                 '}';

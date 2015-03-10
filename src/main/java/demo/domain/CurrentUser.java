@@ -3,30 +3,28 @@ package demo.domain;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
-
-    private User user;
+    private Long id;
+    private Role role;
 
     public CurrentUser(User user) {
         super(user.getEmail(), user.getPasswordHash(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
+        this.id = user.getId();
+        this.role = user.getRole();
     }
 
     public Long getId() {
-        return user.getId();
+        return id;
     }
 
     public Role getRole() {
-        return user.getRole();
+        return role;
     }
 
     @Override
     public String toString() {
         return "CurrentUser{" +
-                "user=" + user +
-                "} " + super.toString();
+                "id=" + id +
+                ", role=" + role +
+                '}';
     }
 }

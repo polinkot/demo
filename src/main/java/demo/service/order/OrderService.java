@@ -21,4 +21,11 @@ public interface OrderService {
      * @return list of all orders
      */
     Iterable<Order> findAll();
+
+    /**
+     * Get Order by User Id
+     * @param id
+     * @return Order
+     */
+    Iterable<Order> getOrdersByUserId(long id);
 }

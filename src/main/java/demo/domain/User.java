@@ -1,6 +1,9 @@
 package demo.domain;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "user1")
@@ -20,6 +23,9 @@ public class User {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<Order> orders;
 
     public Long getId() {
         return id;
@@ -49,12 +55,20 @@ public class User {
         this.role = role;
     }
 
+//    public List<Order> getOrders() {
+//        return Collections.unmodifiableList(this.orders);
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", email='" + email.replaceFirst("@.*", "@***") +
-                ", passwordHash='" + passwordHash.substring(0, 10) +
+                ", email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
                 ", role=" + role +
                 '}';
     }

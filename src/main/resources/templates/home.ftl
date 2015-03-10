@@ -19,10 +19,12 @@
                 <button type="submit">Log out</button>
             </form>
         </li>
-        <li><a href="/orders">View orders</a></li>
         <li><a href="/order/process">New order</a></li>
-    </#if>
-    <#if currentUser?? && currentUser.role == "ADMIN">
+        <#if currentUser.role == "ADMIN">
+            <li><a href="/orders">View all orders</a></li>
+        <#else>
+            <li><a href="/orders/${currentUser.id}">My orders</a></li>
+        </#if>
     </#if>
     </ul>
 </nav>
