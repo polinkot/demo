@@ -19,19 +19,23 @@
 <form role="form" name="form" action="" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-    <div>
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" value="${form.email}" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required/>
-    </div>
-    <div>
-        <label for="passwordRepeated">Repeat</label>
-        <input type="password" name="passwordRepeated" id="passwordRepeated" required/>
-    </div>
-    <button type="submit">Save</button>
+    <table>
+        <tr>
+            <td><label for="email">Email address</label></td>
+            <td><input type="email" name="email" id="email" value="${form.email}" required autofocus/></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" name="password" id="password" required/></td>
+        </tr>
+        <tr>
+            <td><label for="passwordRepeated">Repeat</label></td>
+            <td><input type="password" name="passwordRepeated" id="passwordRepeated" required/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Save</button></td>
+        </tr>
+    </table>
 </form>
 
 <@spring.bind "form" />

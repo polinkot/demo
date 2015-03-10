@@ -17,31 +17,39 @@
 <#if !form.saved>
 <form role="form" name="form" action="" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-    <div>
-        <label for="list">List</label>
-        <input type="text" name="list" id="list" value="${form.list}" required autofocus/>
-    </div>
-    <div>
-        <label for="sortType">Sort Type</label>
-        <input type="text" name="sortType" id="sortType" value="${form.sortType}" required/>
-    </div>
     <input type="hidden" name="userId" id="userId" value="${currentUser.id}" required/>
-    <button type="submit">Save</button>
+
+    <table>
+        <tr>
+            <td><label for="list">List</label></td>
+            <td><input type="text" name="list" id="list" value="${form.list}" required autofocus/></td>
+        </tr>
+        <tr>
+            <td><label for="sortType">Sort Type</label></td>
+            <td><input type="text" name="sortType" id="sortType" value="${form.sortType}" required/></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Save</button>
+            </td>
+        </tr>
+    </table>
 </form>
 <#else>
-<div>
-    <label for="list">List</label>
-    <input type="text" name="list" id="list" value="${form.list}" readonly/>
-</div>
-<div>
-    <label for="sortType">Sort Type</label>
-    <input type="text" name="sortType" id="sortType" value="${form.sortType}" readonly/>
-</div>
-<div>
-    <label for="result">Result</label>
-    <input type="text" name="result" id="result" value="${form.result}" readonly/>
-</div>
+<table>
+    <tr>
+        <td><label for="list">List</label></td>
+        <td><input type="text" name="list" id="list" value="${form.list}" readonly/></td>
+    </tr>
+    <tr>
+        <td><label for="sortType">Sort Type</label></td>
+        <td><input type="text" name="sortType" id="sortType" value="${form.sortType}" readonly/></td>
+    </tr>
+    <tr>
+        <td><label for="result">Result</label></td>
+        <td><input type="text" name="result" id="result" value="${form.result}" readonly/></td>
+    </tr>
+</table>
 </#if>
 
 <@spring.bind "form" />

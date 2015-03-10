@@ -15,15 +15,19 @@
 <form role="form" action="/login" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-    <div>
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required/>
-    </div>
-    <button type="submit">Sign in</button>
+    <table>
+        <tr>
+            <td><label for="email">Email address</label></td>
+            <td><input type="email" name="email" id="email" required autofocus/></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" name="password" id="password" required/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Sign in</button></td>
+        </tr>
+    </table>
 </form>
 
 <#if error.isPresent()>

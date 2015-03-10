@@ -21,7 +21,7 @@
             <th style="width: 150px; text-align: left;">Method</th>
             <th style="width: 100px; text-align: left;">Cost</th>
             <th style="width: 200px; text-align: left;">Original&nbsp;Array</th>
-            <th style="width: 100px; text-align: left;">Sorted&nbsp;Array</th>
+            <th style="width: 200px; text-align: left;">Sorted&nbsp;Array</th>
         </tr>
         <#list orderList as order>
         <tr>
