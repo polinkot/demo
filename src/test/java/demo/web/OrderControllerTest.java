@@ -78,5 +78,14 @@ public class OrderControllerTest {
 //curl -i -X POST -H "Content-Type:application/json" -d "{\"sortType\" : \"TEST_LSDRADIX_SORT\"}" http://localhost:8080/orders
 //curl -i -X POST -H "Content-Type:application/json" -d "{\"list\" : [\"bbbbbb\",\"ccccccc\",\"aaaaaaaaaaaaaaa\"]}}" http://localhost:8080/processOrder/2
 
+//curl -i -X POST -H "Content-Type:application/json" -d "{\"list\" : \"bbbbbb,aaaaa,ffffff\", \"sortType\" : 1, \"userId\" : 1, \"_csrf\" : \"139a9818-1c62-4a00-a2ef-3b4b2f658f02\"}" http://localhost:8080/processOrder
+//curl -i -X GET  http://localhost:8080/viewOrder/6
+
+        //    curl -i -X POST -H "Content-Type:application/json" -d "{\"list\" : \"bbbbbb,aaaaa,ffffff\", \"sortType\" : 1, \"userId\" : 1, \"_csrf\" : \"139a9818-1c62-4a00-a2ef-3b4b2f658f02\"}" http://localhost:8080/order/processJSON
+//    curl -i -X POST -H "Content-Type:application/json" -d "{\"list\" : \"bbbbbb,aaaaa,ffffff\", \"sortType\" : 1, \"userId\" : 1}" http://localhost:8080/order/processJSON
+//curl -i -X GET  http://localhost:8080/viewOrders
+        //curl -i -X GET  http://localhost:8080/viewOrder/6
+
+
     }
 }

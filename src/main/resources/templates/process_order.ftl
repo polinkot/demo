@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <title>Create Order</title>
 </head>
 <body>
 <nav role="navigation">
@@ -13,8 +14,10 @@
         <li><a href="/">Home</a></li>
     </ul>
 </nav>
+<h1>Create Order</h1>
 
-<#if !form.saved>
+<h2 id="savedText"></h2>
+
 <form role="form" name="form" action="" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <input type="hidden" name="userId" id="userId" value="${currentUser.id}" required/>
@@ -29,28 +32,16 @@
             <td><input type="text" name="sortType" id="sortType" value="${form.sortType}" required/></td>
         </tr>
         <tr>
+            <td><label for="result">Result</label></td>
+            <td><input type="text" id="result" value="" disabled/></td>
+        </tr>
+        <tr>
             <td colspan="2">
-                <button type="submit">Save</button>
+                <button type="button" onclick="processOrder();">Save</button>
             </td>
         </tr>
     </table>
 </form>
-<#else>
-<table>
-    <tr>
-        <td><label for="list">List</label></td>
-        <td><input type="text" name="list" id="list" value="${form.list}" readonly/></td>
-    </tr>
-    <tr>
-        <td><label for="sortType">Sort Type</label></td>
-        <td><input type="text" name="sortType" id="sortType" value="${form.sortType}" readonly/></td>
-    </tr>
-    <tr>
-        <td><label for="result">Result</label></td>
-        <td><input type="text" name="result" id="result" value="${form.result}" readonly/></td>
-    </tr>
-</table>
-</#if>
 
 <@spring.bind "form" />
 <#if spring.status.error>
@@ -63,3 +54,49 @@
 
 </body>
 </html>
+
+<script language="JavaScript">
+    function getXmlHttp(){
+        var xmlhttp;
+        try {
+            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                xmlhttp = false;
+            }
+        }
+        if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+            xmlhttp = new XMLHttpRequest();
+        }
+        return xmlhttp;
+    }
+
+    function processOrder() {
+        var j = {
+            "list": document.getElementById("list").value,
+            "sortType": document.getElementById("sortType").value,
+            "userId": document.getElementById("userId").value
+        };
+        var f = JSON.stringify(j); // alert(f);
+
+        var xmlhttp = getXmlHttp();
+        xmlhttp.open('POST', '/order/process', true);
+        xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 200) {
+                    var parsed = JSON.parse(xmlhttp.responseText);
+                    document.getElementById("result").value = parsed.result;
+                    document.getElementById("list").readOnly = true;
+                    document.getElementById("sortType").readOnly = true;
+                    document.getElementById("savedText").innerText = "Order processed!";
+                }
+            }
+        };
+        xmlhttp.send(f);
+    }
+</script>
+
+

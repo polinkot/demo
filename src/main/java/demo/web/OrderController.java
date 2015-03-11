@@ -14,53 +14,58 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(value = "/order/process", method = RequestMethod.GET)
-    public ModelAndView getOrderProcessPage() {
-        return new ModelAndView("process_order", "form", new OrderCreateForm());
-    }
-
     @RequestMapping(value = "/order/process", method = RequestMethod.POST)
-    public ModelAndView handleOrderCreateForm(@ModelAttribute("form") OrderCreateForm form) {
+    public OrderCreateForm processOrder(@RequestBody OrderCreateForm form) {
         String result = orderService.processOrder(form);
         form.setResult(result);
-        form.setSaved(true);
 
-        return new ModelAndView("process_order", "form", form);
+        return form;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping("/viewOrders")
-    public Iterable<Order> viewOrders() {
+    @RequestMapping("/order/list")
+    public Iterable<Order> getOrderList() {
         Iterable<Order> all = orderService.findAll();
         return all;
     }
 
+    @RequestMapping("/order/list/{userId}")
+    public Iterable<Order> getOrderList(@PathVariable Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId == null");
+        }
+
+        Iterable<Order> all = orderService.getOrdersByUserId(userId);
+        return all;
+    }
+
+    @RequestMapping("/viewOrder/{id}")
+    public Order viewOrder(@PathVariable("id") Order order) {
+        return order;
+    }
+
+    @RequestMapping(value = "/order/new", method = RequestMethod.GET)
+    public ModelAndView getOrderProcessPage() {
+        return new ModelAndView("process_order", "form", new OrderCreateForm());
+    }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/orders")
-    public ModelAndView getOrderList() {
-        Iterable<Order> orderList = orderService.findAll();
-
+    public ModelAndView getOrderListPage() {
         ModelMap model = new ModelMap();
-        model.addAttribute("orderList", orderList);
+        model.addAttribute("userId", "");
 
         return new ModelAndView("order_list", model);
     }
 
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #userId)")
     @RequestMapping("/orders/{userId}")
-    public ModelAndView getOrderList(@PathVariable Long userId) {
-        Iterable<Order> orderList = orderService.getOrdersByUserId(userId);
-
+    public ModelAndView getOrderListPage(@PathVariable Long userId) {
         ModelMap model = new ModelMap();
-        model.addAttribute("orderList", orderList);
+        model.addAttribute("userId", userId);
 
         return new ModelAndView("order_list", model);
     }
-
-    //experiment
-    //remove
-    @RequestMapping("/viewOrder/{id}")
-    public Order viewOrder(@PathVariable("id") Order order) {
-        return order;
-    }
 }
+
+
+

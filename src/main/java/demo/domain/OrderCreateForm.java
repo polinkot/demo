@@ -2,8 +2,6 @@ package demo.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
-
 public class OrderCreateForm {
 
     @NotEmpty
@@ -16,8 +14,6 @@ public class OrderCreateForm {
 
     @NotEmpty
     private long userId;
-
-    private boolean saved;
 
     public String getList() {
         return list;
@@ -51,14 +47,6 @@ public class OrderCreateForm {
         this.userId = userId;
     }
 
-    public boolean isSaved() {
-        return saved;
-    }
-
-    public void setSaved(boolean saved) {
-        this.saved = saved;
-    }
-
     @Override
     public String toString() {
         return "OrderCreateForm{" +
@@ -66,7 +54,6 @@ public class OrderCreateForm {
                 ", result='" + result + '\'' +
                 ", sortType=" + sortType +
                 ", userId=" + userId +
-                ", saved=" + saved +
                 '}';
     }
 }
