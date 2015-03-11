@@ -118,6 +118,8 @@ class ArraySorterRegistry {
                 case LSDRADIX_SORT:
                     registry.put(key, new LsdRadixSorter());
                     break;
+                default:
+                    throw new IllegalArgumentException("Illegal sort key: " + key);
             }
         }
 
