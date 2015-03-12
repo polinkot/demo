@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td><label for="sortType">Sort Type</label></td>
-            <td><input type="text" name="sortType" id="sortType" value="${form.sortType}" required/></td>
+            <td><input type="text" name="sortType" id="sortType" value="${form.sortType}" required/> (1,2 or 3)</td>
         </tr>
         <tr>
             <td><label for="result">Result</label></td>
