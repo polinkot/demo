@@ -7,6 +7,15 @@
 <head>
     <meta charset="utf-8">
     <title>Create Order</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<#--<script src="/webjars/jquery/jquery-2.1.3.min.js"></script>-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('p').animate({
+                fontSize: '48px'
+            }, "slow");
+        });
+    </script>
 </head>
 <body>
 <nav role="navigation">
@@ -15,6 +24,8 @@
     </ul>
 </nav>
 <h1>Create Order</h1>
+
+<#--<img src="/templates/webjars/jquery/Chrysanthemum.jpg"/>-->
 
 <h2 id="savedText"></h2>
 
@@ -56,46 +67,35 @@
 </html>
 
 <script language="JavaScript">
-    function getXmlHttp(){
-        var xmlhttp;
-        try {
-            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            try {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (E) {
-                xmlhttp = false;
-            }
-        }
-        if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-            xmlhttp = new XMLHttpRequest();
-        }
-        return xmlhttp;
-    }
-
     function processOrder() {
-        var j = {
-            "list": document.getElementById("list").value,
-            "sortType": document.getElementById("sortType").value,
-            "userId": document.getElementById("userId").value
-        };
-        var f = JSON.stringify(j); // alert(f);
+        if ($("#list").val() == '') {
+            alert('List is null');
+            return;
+        }
 
-        var xmlhttp = getXmlHttp();
-        xmlhttp.open('POST', '/order/process', true);
-        xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4) {
-                if (xmlhttp.status == 200) {
-                    var parsed = JSON.parse(xmlhttp.responseText);
-                    document.getElementById("result").value = parsed.result;
-                    document.getElementById("list").readOnly = true;
-                    document.getElementById("sortType").readOnly = true;
-                    document.getElementById("savedText").innerText = "Order processed!";
-                }
+        if ($("#sortType").val() == '') {
+            alert('Sort Type is null');
+            return;
+        }
+
+        $.ajax({
+            url: "/order/process",
+            method: "POST",
+            dataType: "JSON",
+            Accept : "application/json",
+            contentType: "application/json",
+            data: JSON.stringify({
+                list: $("#list").val(),
+                sortType: 1,
+                userId: 1
+            }),
+            success: function (data) {
+                $("#result").val(data.result);
+                $("#list").prop("readonly", true);
+                $("#sortType").prop("readonly", true);
+                $("#savedText").text("Order processed!");
             }
-        };
-        xmlhttp.send(f);
+        });
     }
 </script>
 
