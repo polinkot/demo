@@ -19,9 +19,6 @@ public class SortType implements Serializable {
     @Column(nullable = false)
     private double cost;
 
-//    @OneToMany(mappedBy = "sortType")
-//    private List<Order> orders;
-
     public SortType() {
     }
 
