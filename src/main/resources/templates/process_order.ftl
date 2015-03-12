@@ -9,13 +9,6 @@
     <title>Create Order</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <#--<script src="/webjars/jquery/jquery-2.1.3.min.js"></script>-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('p').animate({
-                fontSize: '48px'
-            }, "slow");
-        });
-    </script>
 </head>
 <body>
 <nav role="navigation">
@@ -48,7 +41,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <button type="button" onclick="processOrder();">Save</button>
+                <button type="button" id="save" onclick="processOrder();">Save</button>
             </td>
         </tr>
     </table>
@@ -93,7 +86,11 @@
                 $("#result").val(data.result);
                 $("#list").prop("readonly", true);
                 $("#sortType").prop("readonly", true);
-                $("#savedText").text("Order processed!");
+                $("#sortType").prop("readonly", true);
+                $("#save").prop("disabled", true);
+            },
+            error: function (data) {
+                alert('Failed to load data!');
             }
         });
     }
