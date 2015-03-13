@@ -5,7 +5,8 @@ import demo.repository.OrderRepository;
 import demo.service.sortType.SortTypeService;
 import demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +22,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ArraySorter bubbleSorter;
+
+    @Autowired
+    private ArraySorter mergeSorter;
+
+    @Autowired
+    private ArraySorter lsdRadixSorter;
 
     @Override
     public String processOrder(OrderCreateForm form) {
@@ -38,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
         String[] split = form.getList().split(",");
         List<String> list = Arrays.asList(split);
 
-        ArraySorter arraySorter = ArraySorterRegistry.get(sortType.getKey());
+        ArraySorter arraySorter = getSorter(sortType.getKey());
         List<String> sorted = arraySorter.sort(list);
 
         String result = StringUtils.arrayToCommaDelimitedString(sorted.toArray());
@@ -63,6 +73,18 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByUserId(id);
     }
 
+    private ArraySorter getSorter(SortTypeKey key) {
+        switch (key) {
+            case BUBBLE_SORT:
+                return bubbleSorter;
+            case MERGE_SORT:
+                return mergeSorter;
+            case LSDRADIX_SORT:
+                return lsdRadixSorter;
+            default:
+                throw new IllegalArgumentException("Illegal sort key: " + key);
+        }
+    }
 }
 
 interface ArraySorter {
@@ -103,26 +125,20 @@ class LsdRadixSorter implements ArraySorter {
     }
 }
 
-class ArraySorterRegistry {
-    static Map<SortTypeKey, ArraySorter> registry = new HashMap<>();
+@Configuration
+class sorterConfig {
+    @Bean
+    public ArraySorter bubbleSorter() {
+        return new BubbleSorter();
+    }
 
-    static ArraySorter get(SortTypeKey key) {
-        if (!registry.containsKey(key)) {
-            switch (key) {
-                case BUBBLE_SORT:
-                    registry.put(key, new BubbleSorter());
-                    break;
-                case MERGE_SORT:
-                    registry.put(key, new MergeSorter());
-                    break;
-                case LSDRADIX_SORT:
-                    registry.put(key, new LsdRadixSorter());
-                    break;
-                default:
-                    throw new IllegalArgumentException("Illegal sort key: " + key);
-            }
-        }
+    @Bean
+    public ArraySorter mergeSorter() {
+        return new MergeSorter();
+    }
 
-        return registry.get(key);
+    @Bean
+    public ArraySorter lsdRadixSorter() {
+        return new LsdRadixSorter();
     }
 }
