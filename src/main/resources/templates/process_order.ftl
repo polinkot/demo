@@ -8,7 +8,6 @@
     <meta charset="utf-8">
     <title>Create Order</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<#--<script src="/webjars/jquery/jquery-2.1.3.min.js"></script>-->
 </head>
 <body>
 <nav role="navigation">
@@ -18,7 +17,7 @@
 </nav>
 <h1>Create Order</h1>
 
-<#--<img src="/templates/webjars/jquery/Chrysanthemum.jpg"/>-->
+<#--<img src="/Tulips.jpg"/>-->
 
 <h2 id="savedText"></h2>
 
@@ -79,8 +78,8 @@
             contentType: "application/json",
             data: JSON.stringify({
                 list: $("#list").val(),
-                sortType: 1,
-                userId: 1
+                sortType: $("#sortType").val(),
+                userId: $("#userId").val()
             }),
             success: function (data) {
                 $("#result").val(data.result);
