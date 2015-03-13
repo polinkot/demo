@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Order Report</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <title>Order List</title>
+    <script src="/webjars/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             loadList();
@@ -20,7 +20,7 @@
         <li><a href="/">Home</a></li>
     </ul>
 </nav>
-<h1>Order Report</h1>
+<h1>Order List</h1>
 
 <div id="content">
     <table class="datatable" id="orders" border="0" style="border-spacing: 0;">

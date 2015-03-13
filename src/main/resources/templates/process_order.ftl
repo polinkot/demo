@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>Create Order</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/webjars/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
 <nav role="navigation">
@@ -16,8 +16,6 @@
     </ul>
 </nav>
 <h1>Create Order</h1>
-
-<#--<img src="/Tulips.jpg"/>-->
 
 <h2 id="savedText"></h2>
 
