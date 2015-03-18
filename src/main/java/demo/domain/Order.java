@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "order1")
+@Table(name = "demo_order")
 public class Order implements Serializable {
 
     @Id
