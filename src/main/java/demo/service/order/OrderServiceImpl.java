@@ -1,16 +1,21 @@
 package demo.service.order;
 
-import demo.domain.*;
+import demo.domain.Order;
+import demo.domain.OrderCreateForm;
+import demo.domain.SortType;
+import demo.domain.User;
 import demo.repository.OrderRepository;
+import demo.service.sort.ArraySorter;
+import demo.service.sort.SorterRegistry;
 import demo.service.sortType.SortTypeService;
 import demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -24,13 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private UserService userService;
 
     @Autowired
-    private ArraySorter bubbleSorter;
-
-    @Autowired
-    private ArraySorter mergeSorter;
-
-    @Autowired
-    private ArraySorter lsdRadixSorter;
+    private SorterRegistry sorterRegistry;
 
     @Override
     public String processOrder(OrderCreateForm form) {
@@ -48,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         String[] split = form.getList().split(",");
         List<String> list = Arrays.asList(split);
 
-        ArraySorter arraySorter = getSorter(sortType.getKey());
+        ArraySorter arraySorter = sorterRegistry.getSorter(sortType.getKey());
         List<String> sorted = arraySorter.sort(list);
 
         String result = StringUtils.arrayToCommaDelimitedString(sorted.toArray());
@@ -71,74 +70,5 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Iterable<Order> getOrdersByUserId(long id) {
         return orderRepository.findAllByUserId(id);
-    }
-
-    private ArraySorter getSorter(SortTypeKey key) {
-        switch (key) {
-            case BUBBLE_SORT:
-                return bubbleSorter;
-            case MERGE_SORT:
-                return mergeSorter;
-            case LSDRADIX_SORT:
-                return lsdRadixSorter;
-            default:
-                throw new IllegalArgumentException("Illegal sort key: " + key);
-        }
-    }
-}
-
-interface ArraySorter {
-    //supposed to be different in different implementations
-    List<String> sort(List<String> original);
-}
-
-class BubbleSorter implements ArraySorter {
-
-    @Override
-    public List<String> sort(List<String> original) {
-        List<String> result = new ArrayList<>(original);
-        Collections.sort(result);
-
-        return result;
-    }
-}
-
-class MergeSorter implements ArraySorter {
-
-    @Override
-    public List<String> sort(List<String> original) {
-        List<String> result = new ArrayList<>(original);
-        Collections.sort(result);
-
-        return result;
-    }
-}
-
-class LsdRadixSorter implements ArraySorter {
-
-    @Override
-    public List<String> sort(List<String> original) {
-        List<String> result = new ArrayList<>(original);
-        Collections.sort(result);
-
-        return result;
-    }
-}
-
-@Configuration
-class sorterConfig {
-    @Bean
-    public ArraySorter bubbleSorter() {
-        return new BubbleSorter();
-    }
-
-    @Bean
-    public ArraySorter mergeSorter() {
-        return new MergeSorter();
-    }
-
-    @Bean
-    public ArraySorter lsdRadixSorter() {
-        return new LsdRadixSorter();
     }
 }
