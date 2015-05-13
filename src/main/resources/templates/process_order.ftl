@@ -19,7 +19,7 @@
 
 <h2 id="savedText"></h2>
 
-<form role="form" name="form" action="" method="post">
+<form role="form" name="form" action="" method="post" onsubmit="processOrder(); return false;">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <input type="hidden" name="userId" id="userId" value="${currentUser.id}" required/>
 
@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <button type="button" id="save" onclick="processOrder();">Save</button>
+                <button type="submit" id="save">Save</button>
             </td>
         </tr>
     </table>
@@ -58,16 +58,6 @@
 
 <script language="JavaScript">
     function processOrder() {
-        if ($("#list").val() == '') {
-            alert('List is null');
-            return;
-        }
-
-        if ($("#sortType").val() == '') {
-            alert('Sort Type is null');
-            return;
-        }
-
         $.ajax({
             url: "/order/process",
             method: "POST",
